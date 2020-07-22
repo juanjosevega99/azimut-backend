@@ -1,7 +1,8 @@
 const express = require('express')
-const app = express()
 const sls = require('serverless-http')
 const AWS = require('aws-sdk');
+
+const app = express()
 
 const MEASURERS_TABLE = process.env.USERS_TABLE;
 const dynamoDb = new AWS.DynamoDB.DocumentClient();
@@ -10,9 +11,9 @@ const dynamoDb = new AWS.DynamoDB.DocumentClient();
 app.use(express.json())
 
 // Create DATA endpoint
-app.post('/measurers', async (req, res, next) => {
+app.post('/measurers', function (req, res) {
+  const { measurerId, name, description } = req.body;
   const timestamp = new Date().getTime();
-  const { measurerId, name, description, spending } = req.body;
 
   const params = {
     TableName = MEASURERS_TABLE,
@@ -20,11 +21,7 @@ app.post('/measurers', async (req, res, next) => {
       measurerId: measurerId,
       name: name,
       description: description,
-      data: {
-        data1: { spending: spending, submittedAt: timestamp },
-        data2: { spending: spending, submittedAt: timestamp },
-        data3: { spending: spending, submittedAt: timestamp }
-      }
+      submittedAt: timestamp,
     }
   }
 
@@ -33,11 +30,11 @@ app.post('/measurers', async (req, res, next) => {
       console.log(error);
       res.status(400).json({ error: `Could not create user ${userId}` });
     }
-    res.json({ name, description, timestamp });
+    res.json({ measurerId, name, description, timestamp });
   });
 })
 
-app.get('/measurerId/:measurerId', async (req, res) => {
+app.get('/measurerId/:measurerId', function (req, res) {
   const params = {
     TableName: MEASURERS_TABLE,
     Key: {
