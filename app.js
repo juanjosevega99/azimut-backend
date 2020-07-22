@@ -21,8 +21,9 @@ app.post('/measurers', async (req, res, next) => {
       name: name,
       description: description,
       data: {
-        spending: spending,
-        submittedAt: timestamp,
+        data1: { spending: spending, submittedAt: timestamp },
+        data2: { spending: spending, submittedAt: timestamp },
+        data3: { spending: spending, submittedAt: timestamp }
       }
     }
   }

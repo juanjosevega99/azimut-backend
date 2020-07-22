@@ -17,17 +17,16 @@ provider:
         - dynamodb:PutItem
         - dynamodb:UpdateItem
         - dynamodb:DeleteItem
-      Resource:
-        - { "Fn::GetAtt": ["MeasurersDynamoDBTable", "Arn" ] }
+      Resource: "*"
   environment:
     MEASURERS_TABLE: ${self:custom.tableName}
 
 functions:
-  hello:
+  app:
     handler: app.server
     events:
     - http:
-        path: measurers/create
+        path: measurers
         method: ANY
         cors: true
 #      - websocket: $connect
