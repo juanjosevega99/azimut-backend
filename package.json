@@ -2,10 +2,15 @@
   "name": "azimut-backend",
   "version": "1.0.0",
   "description": "Technical test azimut",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Juan Jose Vega <juanvega.tech@gmail.com>",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "aws-sdk": "^2.717.0",
+    "express": "^4.17.1",
+    "serverless-http": "^2.5.0"
+  }
 }
